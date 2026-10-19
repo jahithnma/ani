@@ -49,6 +49,7 @@ input:focus, textarea:focus { outline: 2px solid var(--green); border-color: tra
 .map.tall { height: 46vh; border-radius: 14px; margin-bottom: 12px; }
 
 .summary .line, .card .line { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.card .line b { text-align: right; margin-left: 12px; }
 .summary .line.total { border-bottom: 0; font-size: 17px; }
 .summary .line.total b { color: var(--green); }
 
@@ -113,3 +114,20 @@ input:focus, textarea:focus { outline: 2px solid var(--green); border-color: tra
 .bank .line:last-child { border-bottom: 0; }
 .bank .line b { text-align: right; }
 .sheet .btn.big + .btn.big { margin-top: 8px; }
+
+.topline { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.lang { display: flex; background: rgba(255,255,255,.15); border-radius: 10px; padding: 2px; }
+.lang button { border: 0; background: none; color: #fff; font: inherit; font-weight: 700; font-size: 13px; padding: 4px 9px; border-radius: 8px; }
+.lang button.on { background: #fff; color: var(--green); }
+
+/* rider app */
+.r-status { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.r-status .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #B9C4BF; margin-right: 6px; }
+.r-status.on .dot { background: #2ECC71; }
+.r-status b { font-size: 15px; }
+.job { border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+.job .j-amt { font-size: 20px; font-weight: 800; color: var(--green); }
+.job .j-meta { color: var(--muted); font-size: 13px; margin: 2px 0 8px; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.btns .btn { flex: 1; }
+.notice { background: #FFF6E5; border: 1px dashed var(--gold); border-radius: 12px; padding: 12px; font-size: 14px; }

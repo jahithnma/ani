@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ta">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Cash Delivery Rider</title>
+  <link rel="stylesheet" href="lib/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="rider-app">
+  <header class="topbar">
+    <div class="topline">
+      <div class="brand">🛵 Cash Delivery Rider</div>
+      <div class="lang">
+        <button data-lang="ta">த</button><button data-lang="si">සි</button><button data-lang="en">EN</button>
+      </div>
+    </div>
+    <div class="tag" id="r-who"></div>
+  </header>
+
+  <main class="screen active">
+    <section class="card hidden" id="no-backend">
+      <div class="notice" data-t="r_no_backend"></div>
+    </section>
+
+    <!-- ========== LOGIN ========== -->
+    <section class="card hidden" id="login">
+      <h2 data-t="r_login_title"></h2>
+      <label><span data-t="mobile"></span><input id="l-phone" type="tel" inputmode="numeric" maxlength="12"></label>
+      <label><span data-t="r_pin"></span><input id="l-pin" type="password" inputmode="numeric" maxlength="6"></label>
+      <button class="btn primary big" id="btn-login" data-t="r_login"></button>
+    </section>
+
+    <!-- ========== HOME ========== -->
+    <div id="home" class="hidden">
+      <section class="card">
+        <div class="r-status" id="r-status">
+          <b><span class="dot"></span><span id="r-status-text"></span></b>
+          <button class="btn ghost" id="btn-online"></button>
+        </div>
+      </section>
+
+      <div id="r-map" class="map tall"></div>
+
+      <!-- current delivery -->
+      <section class="card hidden" id="job">
+        <div class="status" id="j-status"></div>
+        <div class="line"><span data-t="r_deliver_cash"></span><b id="j-amount"></b></div>
+        <div class="line"><span data-t="order"></span><b id="j-id"></b></div>
+        <div class="line"><span data-t="r_customer"></span><b id="j-name"></b></div>
+        <div class="line"><span data-t="mobile"></span><b id="j-phone"></b></div>
+        <div class="line"><span data-t="address"></span><b id="j-address"></b></div>
+        <div class="line"><span data-t="r_paid_ref"></span><b id="j-ref"></b></div>
+        <div class="eta" id="j-dist"></div>
+        <div class="btns">
+          <button class="btn call" id="btn-jcall" data-t="call"></button>
+          <button class="btn ghost" id="btn-nav" data-t="r_navigate"></button>
+        </div>
+        <button class="btn primary big hidden" id="btn-start" data-t="r_start"></button>
+        <button class="btn primary big hidden" id="btn-arrived" data-t="r_arrived"></button>
+        <div id="otp-box" class="hidden">
+          <label><span data-t="r_otp_label"></span><input id="j-otp" type="tel" inputmode="numeric" maxlength="4"></label>
+          <button class="btn primary big" id="btn-verify" data-t="r_verify"></button>
+        </div>
+      </section>
+
+      <!-- open orders -->
+      <section class="card" id="open">
+        <h2 data-t="r_new_orders"></h2>
+        <div id="open-list"></div>
+      </section>
+
+      <button class="btn ghost big" id="btn-logout" data-t="r_logout"></button>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="lib/leaflet.js"></script>
+  <script src="lib/firebase-app-compat.js"></script>
+  <script src="lib/firebase-database-compat.js"></script>
+  <script src="config.js"></script>
+  <script src="rider-config.js"></script>
+  <script src="i18n.js"></script>
+  <script src="backend.js"></script>
+  <script src="common.js"></script>
+  <script src="rider.js"></script>
+</body>
+</html>

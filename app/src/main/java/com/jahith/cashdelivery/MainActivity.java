@@ -18,6 +18,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.view.WindowManager;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
@@ -34,6 +35,11 @@ public class MainActivity extends Activity {
     private static final int REQ_LOCATION = 1002;
 
     private WebView web;
+
+    // Continuous location updates (rider app sends its position while online)
+    private LocationManager locationManager;
+    private LocationListener watchListener;
+    private boolean wantWatch;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -63,7 +69,7 @@ public class MainActivity extends Activity {
         });
 
         web.addJavascriptInterface(new Bridge(), "AndroidBridge");
-        web.loadUrl("file:///android_asset/www/index.html");
+        web.loadUrl("file:///android_asset/www/" + BuildConfig.START_PAGE);
     }
 
     private void openExternal(Uri uri) {
@@ -159,9 +165,68 @@ public class MainActivity extends Activity {
         }
         if (granted) {
             fetchLocation();
+            if (wantWatch) startWatch();
         } else {
             js("window.onNativeLocationError('Location permission denied')");
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void startWatch() {
+        wantWatch = true;
+        if (Build.VERSION.SDK_INT >= 23
+                && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, REQ_LOCATION);
+            return;
+        }
+        stopWatch();
+        wantWatch = true;
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (locationManager == null) return;
+        watchListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                sendLocation(location);
+            }
+
+            @Override
+            public void onStatusChanged(String p, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String p) {
+            }
+
+            @Override
+            public void onProviderDisabled(String p) {
+            }
+        };
+        boolean any = false;
+        for (String provider : new String[]{LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER}) {
+            if (locationManager.isProviderEnabled(provider)) {
+                locationManager.requestLocationUpdates(provider, 5000, 10, watchListener, Looper.getMainLooper());
+                any = true;
+            }
+        }
+        if (!any) {
+            js("window.onNativeLocationError('Please turn on Location / GPS')");
+        }
+    }
+
+    private void stopWatch() {
+        wantWatch = false;
+        if (locationManager != null && watchListener != null) {
+            locationManager.removeUpdates(watchListener);
+        }
+        watchListener = null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopWatch();
+        super.onDestroy();
     }
 
     // ---------------------------------------------------------------- UPI payment
@@ -232,6 +297,29 @@ public class MainActivity extends Activity {
                     Toast.makeText(MainActivity.this, number, Toast.LENGTH_LONG).show();
                 }
             });
+        }
+
+        @JavascriptInterface
+        public void watchLocation() {
+            runOnUiThread(MainActivity.this::startWatch);
+        }
+
+        @JavascriptInterface
+        public void stopLocation() {
+            runOnUiThread(MainActivity.this::stopWatch);
+        }
+
+        @JavascriptInterface
+        public void keepScreenOn(final boolean on) {
+            runOnUiThread(() -> {
+                if (on) getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            });
+        }
+
+        @JavascriptInterface
+        public void openUrl(final String url) {
+            runOnUiThread(() -> openExternal(Uri.parse(url)));
         }
 
         @JavascriptInterface

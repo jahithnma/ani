@@ -9,14 +9,19 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">💵 Cash Delivery</div>
-    <div class="tag">ATM போக வேண்டாம் · பணம் வீட்டுக்கே · Sri Lanka</div>
+    <div class="topline">
+      <div class="brand">💵 Cash Delivery</div>
+      <div class="lang">
+        <button data-lang="ta">த</button><button data-lang="si">සි</button><button data-lang="en">EN</button>
+      </div>
+    </div>
+    <div class="tag"><span data-t="tagline"></span> · <span id="mode-tag"></span></div>
   </header>
 
   <!-- ========== HOME / NEW ORDER ========== -->
   <main id="screen-home" class="screen active">
     <section class="card">
-      <h2>எவ்வளவு பணம் வேண்டும்? <small>How much cash?</small></h2>
+      <h2 data-t="how_much"></h2>
       <div class="amount-box">
         <span id="cur-sym">Rs.</span>
         <input id="amount" type="number" inputmode="numeric" placeholder="2000">
@@ -26,27 +31,27 @@
     </section>
 
     <section class="card">
-      <h2>உங்கள் விவரம் <small>Your details</small></h2>
-      <label>பெயர் / Name<input id="name" type="text" autocomplete="name"></label>
-      <label>மொபைல் / Mobile<input id="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="07XXXXXXXX"></label>
-      <label>முகவரி / Address<textarea id="address" rows="2" placeholder="House no, street, landmark"></textarea></label>
+      <h2 data-t="your_details"></h2>
+      <label><span data-t="name"></span><input id="name" type="text" autocomplete="name"></label>
+      <label><span data-t="mobile"></span><input id="phone" type="tel" inputmode="numeric" maxlength="12"></label>
+      <label><span data-t="address"></span><textarea id="address" rows="2" data-tp="address_ph"></textarea></label>
     </section>
 
     <section class="card">
-      <h2>டெலிவரி இடம் <small>Delivery location</small></h2>
+      <h2 data-t="location"></h2>
       <div id="pick-map" class="map"></div>
       <div class="row">
-        <button class="btn ghost" id="btn-locate">📍 என் இருப்பிடம்</button>
+        <button class="btn ghost" id="btn-locate" data-t="my_location"></button>
         <span class="hint" id="riders-near"></span>
       </div>
-      <p class="hint">Map-ல் தொட்டு இடத்தை மாற்றலாம் · Tap map to adjust</p>
+      <p class="hint" data-t="tap_map"></p>
     </section>
 
     <section class="card summary">
-      <div class="line"><span>பணம் / Cash</span><b id="s-amount">Rs. 0</b></div>
-      <div class="line"><span>டெலிவரி கட்டணம் / Fee</span><b id="s-fee">Rs. 0</b></div>
-      <div class="line total"><span>மொத்தம் செலுத்த / Pay total</span><b id="s-total">Rs. 0</b></div>
-      <button class="btn primary big" id="btn-pay">பணம் செலுத்து · Pay</button>
+      <div class="line"><span data-t="cash"></span><b id="s-amount">Rs. 0</b></div>
+      <div class="line"><span data-t="fee"></span><b id="s-fee">Rs. 0</b></div>
+      <div class="line total"><span data-t="pay_total"></span><b id="s-total">Rs. 0</b></div>
+      <button class="btn primary big" id="btn-pay"></button>
       <p class="hint center" id="pay-methods"></p>
     </section>
   </main>
@@ -55,7 +60,7 @@
   <main id="screen-track" class="screen">
     <div id="track-map" class="map tall"></div>
     <section class="card rider-card">
-      <div class="status" id="t-status">Rider தேடுகிறோம்...</div>
+      <div class="status" id="t-status"></div>
       <div class="eta" id="t-eta"></div>
       <div id="t-rider" class="rider hidden">
         <div class="avatar">🛵</div>
@@ -64,57 +69,62 @@
           <div class="rmeta" id="t-rmeta"></div>
           <div class="rphone">📞 <span id="t-rphone"></span></div>
         </div>
-        <button class="btn call" id="btn-call">Call</button>
+        <button class="btn call" id="btn-call" data-t="call"></button>
       </div>
       <div class="otp hidden" id="t-otp-box">
-        பணம் வாங்கும் போது Rider-இடம் இந்த OTP சொல்லுங்கள்
+        <span data-t="otp_tell"></span>
         <div class="otp-code" id="t-otp"></div>
       </div>
       <ol class="steps" id="t-steps">
-        <li data-s="paid">பணம் செலுத்தப்பட்டது · Paid</li>
-        <li data-s="assigned">Rider ஒதுக்கப்பட்டார் · Rider assigned</li>
-        <li data-s="on_the_way">வழியில் · On the way</li>
-        <li data-s="arrived">வந்துவிட்டார் · Arrived</li>
-        <li data-s="delivered">பணம் கிடைத்தது · Delivered</li>
+        <li data-s="paid" data-t="step_paid"></li>
+        <li data-s="assigned" data-t="step_assigned"></li>
+        <li data-s="on_the_way" data-t="step_on_the_way"></li>
+        <li data-s="arrived" data-t="step_arrived"></li>
+        <li data-s="delivered" data-t="step_delivered"></li>
       </ol>
-      <div class="line"><span>Order</span><b id="t-id"></b></div>
-      <div class="line"><span>Cash</span><b id="t-amount"></b></div>
-      <button class="btn primary big hidden" id="btn-received">✅ பணம் கிடைத்தது / Cash received</button>
+      <div class="line"><span data-t="order"></span><b id="t-id"></b></div>
+      <div class="line"><span data-t="cash"></span><b id="t-amount"></b></div>
+      <button class="btn primary big hidden" id="btn-received" data-t="cash_received"></button>
     </section>
   </main>
 
   <!-- ========== ORDERS ========== -->
   <main id="screen-orders" class="screen">
     <section class="card">
-      <h2>என் ஆர்டர்கள் <small>My orders</small></h2>
+      <h2 data-t="orders_title"></h2>
       <div id="orders-list"></div>
     </section>
   </main>
 
   <nav class="bottomnav">
-    <button data-go="home" class="active">🏠<span>Home</span></button>
-    <button data-go="track">🛵<span>Track</span></button>
-    <button data-go="orders">📋<span>Orders</span></button>
+    <button data-go="home" class="active">🏠<span data-t="nav_home"></span></button>
+    <button data-go="track">🛵<span data-t="nav_track"></span></button>
+    <button data-go="orders">📋<span data-t="nav_orders"></span></button>
   </nav>
 
   <!-- ========== PAYMENT SHEET (Sri Lanka: LankaQR / bank / eZ Cash) ========== -->
   <div id="paysheet" class="sheet hidden">
     <div class="sheet-card">
-      <h2>பணம் செலுத்துங்கள் <small>Make payment</small></h2>
+      <h2 data-t="make_payment"></h2>
       <div class="pay-total" id="p-total"></div>
       <img id="p-qr" class="qr" alt="LankaQR">
-      <p class="hint center" id="p-qr-hint">எந்த bank app / eZ Cash / Genie மூலமும் LankaQR scan செய்யுங்கள்</p>
+      <p class="hint center" id="p-qr-hint" data-t="qr_hint"></p>
       <div class="bank" id="p-bank"></div>
-      <label>Payment reference / Transaction ID<input id="p-ref" type="text" placeholder="eg: 123456789"></label>
-      <button class="btn primary big" id="btn-paid">✅ பணம் செலுத்தினேன் · I have paid</button>
-      <button class="btn ghost big" id="btn-paycancel">ரத்து · Cancel</button>
+      <label><span data-t="ref_label"></span><input id="p-ref" type="text" placeholder="eg: 123456789"></label>
+      <button class="btn primary big" id="btn-paid" data-t="i_paid"></button>
+      <button class="btn ghost big" id="btn-paycancel" data-t="cancel"></button>
     </div>
   </div>
 
   <div id="toast" class="toast"></div>
 
   <script src="lib/leaflet.js"></script>
+  <script src="lib/firebase-app-compat.js"></script>
+  <script src="lib/firebase-database-compat.js"></script>
   <script src="config.js"></script>
+  <script src="i18n.js"></script>
+  <script src="backend.js"></script>
+  <script src="common.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "riders": {
+      ".read": true,
+      ".indexOn": ["online"],
+      "$riderId": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['name', 'phone'])"
+      }
+    },
+    "orders": {
+      ".read": true,
+      ".indexOn": ["status", "riderId"],
+      "$orderId": {
+        ".write": "!data.exists() || data.child('status').val() !== 'delivered'",
+        ".validate": "newData.hasChildren(['id', 'amount', 'status', 'location', 'otpHash']) && newData.child('id').val() === $orderId"
+      }
+    }
+  }
+}

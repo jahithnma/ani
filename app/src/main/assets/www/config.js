@@ -43,9 +43,19 @@ window.APP_CONFIG = {
   // Map centre used before the customer's location is known (Colombo)
   defaultCenter: [6.9271, 79.8612],
 
-  // Your delivery riders. Put real names and mobile numbers here.
-  // (Their positions on the map are simulated in this version -
-  //  live GPS tracking needs a backend server, see README.)
+  // Firebase Realtime Database (free) - makes orders reach the Rider app and
+  // shows riders' real GPS on the customer map. Leave as is to use the
+  // offline demo (simulated riders). Setup steps: see README.
+  firebase: {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "YOUR_PROJECT",
+    appId: "YOUR_APP_ID"
+  },
+
+  // Demo riders, used only while firebase above is not set up.
+  // Real riders log in to the Rider app (accounts: rider-config.js).
   riders: [
     { name: "Kumaran S",       phone: "0770000001", vehicle: "WP BAB-1234", rating: 4.8 },
     { name: "Rizwan Mohamed",  phone: "0770000002", vehicle: "WP BCD-5678", rating: 4.9 },
