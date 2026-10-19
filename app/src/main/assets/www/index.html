@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ta">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Cash Delivery</title>
+  <link rel="stylesheet" href="lib/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">💵 Cash Delivery</div>
+    <div class="tag">ATM போக வேண்டாம் · பணம் வீட்டுக்கே</div>
+  </header>
+
+  <!-- ========== HOME / NEW ORDER ========== -->
+  <main id="screen-home" class="screen active">
+    <section class="card">
+      <h2>எவ்வளவு பணம் வேண்டும்? <small>How much cash?</small></h2>
+      <div class="amount-box">
+        <span>₹</span>
+        <input id="amount" type="number" inputmode="numeric" placeholder="2000">
+      </div>
+      <div class="chips" id="chips"></div>
+      <p class="hint" id="amount-hint"></p>
+    </section>
+
+    <section class="card">
+      <h2>உங்கள் விவரம் <small>Your details</small></h2>
+      <label>பெயர் / Name<input id="name" type="text" autocomplete="name"></label>
+      <label>மொபைல் / Mobile<input id="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digit number"></label>
+      <label>முகவரி / Address<textarea id="address" rows="2" placeholder="House no, street, landmark"></textarea></label>
+    </section>
+
+    <section class="card">
+      <h2>டெலிவரி இடம் <small>Delivery location</small></h2>
+      <div id="pick-map" class="map"></div>
+      <div class="row">
+        <button class="btn ghost" id="btn-locate">📍 என் இருப்பிடம்</button>
+        <span class="hint" id="riders-near"></span>
+      </div>
+      <p class="hint">Map-ல் தொட்டு இடத்தை மாற்றலாம் · Tap map to adjust</p>
+    </section>
+
+    <section class="card summary">
+      <div class="line"><span>பணம் / Cash</span><b id="s-amount">₹0</b></div>
+      <div class="line"><span>டெலிவரி கட்டணம் / Fee</span><b id="s-fee">₹0</b></div>
+      <div class="line total"><span>மொத்தம் செலுத்த / Pay total</span><b id="s-total">₹0</b></div>
+      <button class="btn primary big" id="btn-pay">UPI மூலம் பணம் செலுத்து</button>
+      <p class="hint center">GPay · PhonePe · Paytm · BHIM</p>
+    </section>
+  </main>
+
+  <!-- ========== TRACKING ========== -->
+  <main id="screen-track" class="screen">
+    <div id="track-map" class="map tall"></div>
+    <section class="card rider-card">
+      <div class="status" id="t-status">Rider தேடுகிறோம்...</div>
+      <div class="eta" id="t-eta"></div>
+      <div id="t-rider" class="rider hidden">
+        <div class="avatar">🛵</div>
+        <div class="info">
+          <div class="rname" id="t-rname"></div>
+          <div class="rmeta" id="t-rmeta"></div>
+          <div class="rphone">📞 <span id="t-rphone"></span></div>
+        </div>
+        <button class="btn call" id="btn-call">Call</button>
+      </div>
+      <div class="otp hidden" id="t-otp-box">
+        பணம் வாங்கும் போது Rider-இடம் இந்த OTP சொல்லுங்கள்
+        <div class="otp-code" id="t-otp"></div>
+      </div>
+      <ol class="steps" id="t-steps">
+        <li data-s="paid">பணம் செலுத்தப்பட்டது · Paid</li>
+        <li data-s="assigned">Rider ஒதுக்கப்பட்டார் · Rider assigned</li>
+        <li data-s="on_the_way">வழியில் · On the way</li>
+        <li data-s="arrived">வந்துவிட்டார் · Arrived</li>
+        <li data-s="delivered">பணம் கிடைத்தது · Delivered</li>
+      </ol>
+      <div class="line"><span>Order</span><b id="t-id"></b></div>
+      <div class="line"><span>Cash</span><b id="t-amount"></b></div>
+      <button class="btn primary big hidden" id="btn-received">✅ பணம் கிடைத்தது / Cash received</button>
+    </section>
+  </main>
+
+  <!-- ========== ORDERS ========== -->
+  <main id="screen-orders" class="screen">
+    <section class="card">
+      <h2>என் ஆர்டர்கள் <small>My orders</small></h2>
+      <div id="orders-list"></div>
+    </section>
+  </main>
+
+  <nav class="bottomnav">
+    <button data-go="home" class="active">🏠<span>Home</span></button>
+    <button data-go="track">🛵<span>Track</span></button>
+    <button data-go="orders">📋<span>Orders</span></button>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="lib/leaflet.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
