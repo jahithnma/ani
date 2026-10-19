@@ -1,9 +1,9 @@
-name: Build Android APK
+name: Build Wallpaper 8K APK
 
 on:
   push:
     branches: [main, claude/8k-wallpaper-ai-app-7i1ldl]
-    paths: ['wallpaper-app/**', '.github/workflows/android-apk.yml']
+    paths: ['wallpaper-app/**', '.github/workflows/wallpaper-apk.yml']
   workflow_dispatch:
 
 permissions:
@@ -65,7 +65,7 @@ jobs:
       - name: Publish APK as a GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: apk-build-${{ github.run_number }}
+          tag_name: wallpaper8k-apk-${{ github.run_number }}
           name: Wallpaper 8K APK (build ${{ github.run_number }})
           target_commitish: ${{ github.sha }}
           prerelease: true
