@@ -1,0 +1,76 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main, claude/8k-wallpaper-ai-app-7i1ldl]
+    paths: ['wallpaper-app/**', '.github/workflows/android-apk.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: wallpaper-app
+    env:
+      CI: '1'
+      # Optional keys: add them under Settings -> Secrets and variables -> Actions.
+      EXPO_PUBLIC_REVENUECAT_ANDROID_KEY: ${{ secrets.REVENUECAT_ANDROID_KEY }}
+      EXPO_PUBLIC_PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+      EXPO_PUBLIC_POLLINATIONS_TOKEN: ${{ secrets.POLLINATIONS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: wallpaper-app/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Generate native Android project
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Build release APK
+        working-directory: wallpaper-app/android
+        run: ./gradlew assembleRelease --no-daemon -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=1g"
+
+      - name: Collect APK
+        run: |
+          mkdir -p ../dist
+          cp android/app/build/outputs/apk/release/app-release.apk ../dist/Wallpaper8K-${{ github.run_number }}.apk
+          ls -lh ../dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Wallpaper8K-apk
+          path: dist/*.apk
+
+      - name: Publish APK as a GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-build-${{ github.run_number }}
+          name: Wallpaper 8K APK (build ${{ github.run_number }})
+          target_commitish: ${{ github.sha }}
+          prerelease: true
+          files: dist/*.apk
+          body: |
+            Test APK for Android, built from ${{ github.sha }}.
+            Download the .apk below on your phone and allow "Install unknown apps".
+            Signed with the debug key: for testing only. Use `npm run build:android` (EAS) for the Play Store.
