@@ -1,0 +1,312 @@
+[
+  {
+    "id": "p-liquid-gold",
+    "tier": "premium",
+    "title": "Liquid Gold",
+    "category": "abstract",
+    "style": "fluid",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1507230
+  },
+  {
+    "id": "p-silk-ocean",
+    "tier": "premium",
+    "title": "Silk Ocean",
+    "category": "abstract",
+    "style": "fluid",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1519230
+  },
+  {
+    "id": "p-violet-dream",
+    "tier": "premium",
+    "title": "Violet Dream",
+    "category": "abstract",
+    "style": "fluid",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1589782
+  },
+  {
+    "id": "p-candy-flow",
+    "tier": "premium",
+    "title": "Candy Flow",
+    "category": "abstract",
+    "style": "fluid",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1510565
+  },
+  {
+    "id": "p-golden-lights",
+    "tier": "premium",
+    "title": "Golden Lights",
+    "category": "nature",
+    "style": "aurora",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1188025
+  },
+  {
+    "id": "p-solar-storm",
+    "tier": "premium",
+    "title": "Solar Storm",
+    "category": "nature",
+    "style": "aurora",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1399494
+  },
+  {
+    "id": "p-arctic-night",
+    "tier": "premium",
+    "title": "Arctic Night",
+    "category": "nature",
+    "style": "aurora",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1191560
+  },
+  {
+    "id": "p-dragon-fractal",
+    "tier": "premium",
+    "title": "Dragon Fractal",
+    "category": "fractal",
+    "style": "julia",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 5044765
+  },
+  {
+    "id": "p-electric-coral",
+    "tier": "premium",
+    "title": "Electric Coral",
+    "category": "fractal",
+    "style": "julia",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 4297926
+  },
+  {
+    "id": "p-galaxy-spiral",
+    "tier": "premium",
+    "title": "Galaxy Spiral",
+    "category": "fractal",
+    "style": "julia",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 6122699
+  },
+  {
+    "id": "p-golden-lace",
+    "tier": "premium",
+    "title": "Golden Lace",
+    "category": "fractal",
+    "style": "julia",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 5081496
+  },
+  {
+    "id": "p-orion-nebula",
+    "tier": "premium",
+    "title": "Orion Nebula",
+    "category": "space",
+    "style": "nebula",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1943839
+  },
+  {
+    "id": "p-emerald-nebula",
+    "tier": "premium",
+    "title": "Emerald Nebula",
+    "category": "space",
+    "style": "nebula",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1836929
+  },
+  {
+    "id": "p-crimson-void",
+    "tier": "premium",
+    "title": "Crimson Void",
+    "category": "space",
+    "style": "nebula",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1700816
+  },
+  {
+    "id": "p-retro-drive",
+    "tier": "premium",
+    "title": "Retro Drive",
+    "category": "cyberpunk",
+    "style": "synthwave",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1538167
+  },
+  {
+    "id": "p-cyan-horizon",
+    "tier": "premium",
+    "title": "Cyan Horizon",
+    "category": "cyberpunk",
+    "style": "synthwave",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1636712
+  },
+  {
+    "id": "p-dune-layers",
+    "tier": "premium",
+    "title": "Dune Layers",
+    "category": "minimal",
+    "style": "waves",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1044148
+  },
+  {
+    "id": "p-deep-sea",
+    "tier": "premium",
+    "title": "Deep Sea",
+    "category": "minimal",
+    "style": "waves",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1095143
+  },
+  {
+    "id": "p-halo-amoled",
+    "tier": "premium",
+    "title": "Halo",
+    "category": "amoled",
+    "style": "rings",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 724656
+  },
+  {
+    "id": "p-portal-amoled",
+    "tier": "premium",
+    "title": "Portal",
+    "category": "amoled",
+    "style": "rings",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 805019
+  },
+  {
+    "id": "p-amethyst-crystal",
+    "tier": "premium",
+    "title": "Amethyst Crystal",
+    "category": "geometric",
+    "style": "crystal",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1181136
+  },
+  {
+    "id": "p-glacier-crystal",
+    "tier": "premium",
+    "title": "Glacier Crystal",
+    "category": "geometric",
+    "style": "crystal",
+    "width": 4320,
+    "height": 7680,
+    "bytes": 1187691
+  },
+  {
+    "id": "f-sunset-flow",
+    "tier": "free",
+    "title": "Sunset Flow",
+    "category": "abstract",
+    "style": "fluid",
+    "width": 2160,
+    "height": 3840,
+    "bytes": 510242
+  },
+  {
+    "id": "f-mint-flow",
+    "tier": "free",
+    "title": "Mint Flow",
+    "category": "abstract",
+    "style": "fluid",
+    "width": 2160,
+    "height": 3840,
+    "bytes": 400920
+  },
+  {
+    "id": "f-green-aurora",
+    "tier": "free",
+    "title": "Green Aurora",
+    "category": "nature",
+    "style": "aurora",
+    "width": 2160,
+    "height": 3840,
+    "bytes": 346714
+  },
+  {
+    "id": "f-blue-fractal",
+    "tier": "free",
+    "title": "Blue Fractal",
+    "category": "fractal",
+    "style": "julia",
+    "width": 2160,
+    "height": 3840,
+    "bytes": 1509039
+  },
+  {
+    "id": "f-cosmic-dust",
+    "tier": "free",
+    "title": "Cosmic Dust",
+    "category": "space",
+    "style": "nebula",
+    "width": 2160,
+    "height": 3840,
+    "bytes": 576573
+  },
+  {
+    "id": "f-neon-sunset",
+    "tier": "free",
+    "title": "Neon Sunset",
+    "category": "cyberpunk",
+    "style": "synthwave",
+    "width": 2160,
+    "height": 3840,
+    "bytes": 487325
+  },
+  {
+    "id": "f-pastel-waves",
+    "tier": "free",
+    "title": "Pastel Waves",
+    "category": "minimal",
+    "style": "waves",
+    "width": 2160,
+    "height": 3840,
+    "bytes": 306133
+  },
+  {
+    "id": "f-blue-halo",
+    "tier": "free",
+    "title": "Blue Halo",
+    "category": "amoled",
+    "style": "rings",
+    "width": 2160,
+    "height": 3840,
+    "bytes": 207856
+  },
+  {
+    "id": "f-rose-crystal",
+    "tier": "free",
+    "title": "Rose Crystal",
+    "category": "geometric",
+    "style": "crystal",
+    "width": 2160,
+    "height": 3840,
+    "bytes": 367677
+  }
+]

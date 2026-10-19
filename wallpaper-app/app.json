@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "Wallpaper 8K",
+    "slug": "wallpaper-8k",
+    "scheme": "wallpaper8k",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#07070C",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#07070C"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jahith.wallpaper8k",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.jahith.wallpaper8k",
+      "adaptiveIcon": {
+        "backgroundColor": "#07070C",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "com.android.vending.BILLING"
+      ],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow Wallpaper 8K to access your photos.",
+          "savePhotosPermission": "Allow Wallpaper 8K to save wallpapers to your photo library.",
+          "isAccessMediaLocationEnabled": false
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

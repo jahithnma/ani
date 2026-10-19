@@ -1,0 +1,42 @@
+{
+  "name": "wallpaper-8k",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "expo": "~58.0.16",
+    "expo-blur": "~58.0.5",
+    "expo-constants": "~58.0.12",
+    "expo-file-system": "~58.0.10",
+    "expo-haptics": "~58.0.7",
+    "expo-image": "~58.0.16",
+    "expo-linear-gradient": "~58.0.3",
+    "expo-linking": "~58.0.13",
+    "expo-media-library": "~58.0.11",
+    "expo-router": "~58.0.24",
+    "expo-status-bar": "~58.0.3",
+    "expo-system-ui": "~58.0.6",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
+    "react-native-purchases": "^10.15.0",
+    "react-native-safe-area-context": "~5.10.1",
+    "react-native-screens": "~4.30.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.3.0",
+    "typescript": "~6.0.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "build:android": "npx eas-cli@latest build -p android --profile production",
+    "build:ios": "npx eas-cli@latest build -p ios --profile production",
+    "build:apk": "npx eas-cli@latest build -p android --profile preview",
+    "submit:android": "npx eas-cli@latest submit -p android --profile production",
+    "submit:ios": "npx eas-cli@latest submit -p ios --profile production"
+  },
+  "private": true
+}
