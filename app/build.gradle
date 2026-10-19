@@ -1,0 +1,45 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.jahith.cashdelivery'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.jahith.cashdelivery'
+        minSdk 24
+        targetSdk 34
+        versionCode 2
+        versionName '2.0'
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    // Two APKs from one project: the customer app and the delivery-rider app
+    flavorDimensions 'role'
+    productFlavors {
+        customer {
+            dimension 'role'
+            buildConfigField 'String', 'START_PAGE', '"index.html"'
+        }
+        rider {
+            dimension 'role'
+            applicationIdSuffix '.rider'
+            buildConfigField 'String', 'START_PAGE', '"rider.html"'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

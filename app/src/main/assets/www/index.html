@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ta">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Cash Delivery</title>
+  <link rel="stylesheet" href="lib/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topline">
+      <div class="brand">💵 Cash Delivery</div>
+      <div class="lang">
+        <button data-lang="ta">த</button><button data-lang="si">සි</button><button data-lang="en">EN</button>
+      </div>
+    </div>
+    <div class="tag"><span data-t="tagline"></span> · <span id="mode-tag"></span></div>
+  </header>
+
+  <!-- ========== HOME / NEW ORDER ========== -->
+  <main id="screen-home" class="screen active">
+    <section class="card">
+      <h2 data-t="how_much"></h2>
+      <div class="amount-box">
+        <span id="cur-sym">Rs.</span>
+        <input id="amount" type="number" inputmode="numeric" placeholder="2000">
+      </div>
+      <div class="chips" id="chips"></div>
+      <p class="hint" id="amount-hint"></p>
+    </section>
+
+    <section class="card">
+      <h2 data-t="your_details"></h2>
+      <label><span data-t="name"></span><input id="name" type="text" autocomplete="name"></label>
+      <label><span data-t="mobile"></span><input id="phone" type="tel" inputmode="numeric" maxlength="12"></label>
+      <label><span data-t="address"></span><textarea id="address" rows="2" data-tp="address_ph"></textarea></label>
+    </section>
+
+    <section class="card">
+      <h2 data-t="location"></h2>
+      <div id="pick-map" class="map"></div>
+      <div class="row">
+        <button class="btn ghost" id="btn-locate" data-t="my_location"></button>
+        <span class="hint" id="riders-near"></span>
+      </div>
+      <p class="hint" data-t="tap_map"></p>
+    </section>
+
+    <section class="card summary">
+      <div class="line"><span data-t="cash"></span><b id="s-amount">Rs. 0</b></div>
+      <div class="line"><span data-t="fee"></span><b id="s-fee">Rs. 0</b></div>
+      <div class="line total"><span data-t="pay_total"></span><b id="s-total">Rs. 0</b></div>
+      <button class="btn primary big" id="btn-pay"></button>
+      <p class="hint center" id="pay-methods"></p>
+    </section>
+  </main>
+
+  <!-- ========== TRACKING ========== -->
+  <main id="screen-track" class="screen">
+    <div id="track-map" class="map tall"></div>
+    <section class="card rider-card">
+      <div class="status" id="t-status"></div>
+      <div class="eta" id="t-eta"></div>
+      <div id="t-rider" class="rider hidden">
+        <div class="avatar">🛵</div>
+        <div class="info">
+          <div class="rname" id="t-rname"></div>
+          <div class="rmeta" id="t-rmeta"></div>
+          <div class="rphone">📞 <span id="t-rphone"></span></div>
+        </div>
+        <button class="btn call" id="btn-call" data-t="call"></button>
+      </div>
+      <div class="otp hidden" id="t-otp-box">
+        <span data-t="otp_tell"></span>
+        <div class="otp-code" id="t-otp"></div>
+      </div>
+      <ol class="steps" id="t-steps">
+        <li data-s="paid" data-t="step_paid"></li>
+        <li data-s="assigned" data-t="step_assigned"></li>
+        <li data-s="on_the_way" data-t="step_on_the_way"></li>
+        <li data-s="arrived" data-t="step_arrived"></li>
+        <li data-s="delivered" data-t="step_delivered"></li>
+      </ol>
+      <div class="line"><span data-t="order"></span><b id="t-id"></b></div>
+      <div class="line"><span data-t="cash"></span><b id="t-amount"></b></div>
+      <button class="btn primary big hidden" id="btn-received" data-t="cash_received"></button>
+    </section>
+  </main>
+
+  <!-- ========== ORDERS ========== -->
+  <main id="screen-orders" class="screen">
+    <section class="card">
+      <h2 data-t="orders_title"></h2>
+      <div id="orders-list"></div>
+    </section>
+  </main>
+
+  <nav class="bottomnav">
+    <button data-go="home" class="active">🏠<span data-t="nav_home"></span></button>
+    <button data-go="track">🛵<span data-t="nav_track"></span></button>
+    <button data-go="orders">📋<span data-t="nav_orders"></span></button>
+  </nav>
+
+  <!-- ========== PAYMENT SHEET (Sri Lanka: LankaQR / bank / eZ Cash) ========== -->
+  <div id="paysheet" class="sheet hidden">
+    <div class="sheet-card">
+      <h2 data-t="make_payment"></h2>
+      <div class="pay-total" id="p-total"></div>
+      <img id="p-qr" class="qr" alt="LankaQR">
+      <p class="hint center" id="p-qr-hint" data-t="qr_hint"></p>
+      <div class="bank" id="p-bank"></div>
+      <label><span data-t="ref_label"></span><input id="p-ref" type="text" placeholder="eg: 123456789"></label>
+      <button class="btn primary big" id="btn-paid" data-t="i_paid"></button>
+      <button class="btn ghost big" id="btn-paycancel" data-t="cancel"></button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="lib/leaflet.js"></script>
+  <script src="lib/firebase-app-compat.js"></script>
+  <script src="lib/firebase-database-compat.js"></script>
+  <script src="config.js"></script>
+  <script src="i18n.js"></script>
+  <script src="backend.js"></script>
+  <script src="common.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
