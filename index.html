@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#06080f" />
+  <meta name="description" content="Family War 3D - Parents vs Sons. A 3D attack game created by Jahith." />
+  <title>Family War 3D</title>
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="c"></canvas>
+
+    <!-- ===== HUD ===== -->
+    <div id="hud" class="hidden">
+      <div id="hud-tl">
+        <button id="btn-pause" class="icon-btn" aria-label="Pause">II</button>
+        <div>
+          <div id="level-tag"></div>
+          <div id="team-tag"></div>
+        </div>
+      </div>
+      <div id="objective"></div>
+      <div id="timer" class="hidden"></div>
+      <div id="boss-bar" class="hidden">
+        <div class="label">ANCESTOR SPIRIT</div>
+        <div class="bar"><div id="boss-fill"></div></div>
+      </div>
+      <canvas id="minimap" width="150" height="150"></canvas>
+      <div id="counts"></div>
+      <div id="killfeed"></div>
+      <div id="announce"></div>
+      <div id="waypoint"><span class="arrow">&#9650;</span><span id="wp-dist"></span></div>
+      <div id="crosshair"><i class="t"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="dot"></i></div>
+      <div id="hitmarker"></div>
+      <div id="status">
+        <div id="key-icon" class="hidden">KEY CARD</div>
+        <div class="hp-row">
+          <span class="hp-label">HP</span>
+          <div id="hp-wrap"><div id="hp-fill"></div></div>
+          <span id="hp-text">100</span>
+        </div>
+      </div>
+      <div id="ammo"><b id="ammo-mag">30</b><span id="ammo-res">/ 120</span><div id="reload-msg" class="hidden">RELOADING</div></div>
+      <div id="watermark">Created by <b>Jahith</b></div>
+      <div id="vignette"></div>
+      <div id="freeze"></div>
+      <div id="flash"></div>
+    </div>
+
+    <!-- ===== Touch controls ===== -->
+    <div id="touch" class="hidden">
+      <div id="joy-base"><div id="joy-knob"></div></div>
+      <div id="joy-hint">MOVE</div>
+      <div id="look-hint">DRAG TO AIM</div>
+      <button id="t-fire" class="tbtn fire">FIRE</button>
+      <button id="t-jump" class="tbtn">JUMP</button>
+      <button id="t-reload" class="tbtn">RELOAD</button>
+      <button id="t-sprint" class="tbtn">RUN</button>
+    </div>
+
+    <!-- ===== Loading ===== -->
+    <div id="screen-loading" class="screen show">
+      <div class="logo"><span class="l1">FAMILY</span><span class="l2">WAR 3D</span></div>
+      <div class="by">Created by <b>JAHITH</b></div>
+      <div class="loadbar"><div id="load-fill"></div></div>
+    </div>
+
+    <!-- ===== Main menu ===== -->
+    <div id="screen-menu" class="screen">
+      <div class="menu-wrap">
+        <div class="logo"><span class="l1">FAMILY</span><span class="l2">WAR 3D</span></div>
+        <div class="tagline"><span class="tp">PARENTS</span> <i>vs</i> <span class="ts">SONS</span></div>
+        <div class="by big">Created by <b>JAHITH</b></div>
+        <div class="menu-buttons">
+          <button class="btn primary" data-act="play">PLAY</button>
+          <button class="btn" data-act="levels">LEVELS</button>
+          <button class="btn" data-act="settings">SETTINGS</button>
+          <button class="btn" data-act="help">HOW TO PLAY</button>
+        </div>
+      </div>
+      <div class="footer">10 Levels &middot; Full 3D &middot; v1.0 &middot; &copy; Jahith</div>
+    </div>
+
+    <!-- ===== Team select ===== -->
+    <div id="screen-team" class="screen">
+      <h2>CHOOSE YOUR SIDE</h2>
+      <div class="team-cards">
+        <button class="team-card parents" data-team="parents">
+          <div class="tc-title">PARENTS</div>
+          <div class="tc-members">Appa &middot; Amma &middot; Periyappa &middot; Chithi</div>
+          <div class="tc-desc">Wisdom, experience and the house rules. Taller and tougher.</div>
+          <div class="tc-stat">HP 110 &middot; Speed normal</div>
+        </button>
+        <button class="team-card sons" data-team="sons">
+          <div class="tc-title">SONS</div>
+          <div class="tc-members">Arun &middot; Karthik &middot; Vijay &middot; Surya</div>
+          <div class="tc-desc">Young, fast and rebellious. Smaller target, quicker feet.</div>
+          <div class="tc-stat">HP 100 &middot; Speed fast</div>
+        </button>
+      </div>
+      <button class="btn small" data-act="back">BACK</button>
+    </div>
+
+    <!-- ===== Level select ===== -->
+    <div id="screen-levels" class="screen">
+      <h2>SELECT LEVEL</h2>
+      <div id="level-grid"></div>
+      <button class="btn small" data-act="back">BACK</button>
+    </div>
+
+    <!-- ===== Settings ===== -->
+    <div id="screen-settings" class="screen">
+      <h2>SETTINGS</h2>
+      <div class="settings">
+        <div class="set-row"><span>Graphics</span>
+          <div class="seg" id="set-quality">
+            <button data-v="low">LOW</button><button data-v="medium">MEDIUM</button><button data-v="high">HIGH</button>
+          </div>
+        </div>
+        <div class="set-row"><span>Aim sensitivity</span><input id="set-sens" type="range" min="0.3" max="2.5" step="0.1" /></div>
+        <div class="set-row"><span>Sound</span>
+          <div class="seg" id="set-sound"><button data-v="on">ON</button><button data-v="off">OFF</button></div>
+        </div>
+      </div>
+      <button class="btn small" data-act="back">BACK</button>
+    </div>
+
+    <!-- ===== Help ===== -->
+    <div id="screen-help" class="screen">
+      <h2>HOW TO PLAY</h2>
+      <div class="help">
+        <p><b>The story:</b> a family feud has turned into a war. Pick a side - <span class="tp">Parents</span> or <span class="ts">Sons</span>.</p>
+        <p><b>Key card:</b> one fighter on each team secretly carries a KEY CARD. Nobody knows who. When the carrier falls, the card appears. Grab the enemy's card and reach the gate to escape to the next level. If the enemy grabs <i>your</i> team's card and reaches the gate first, you lose!</p>
+        <p><b>Souls:</b> on the next level, the aathmas (souls) of everyone who fell come back to chase you. Shoot them and run along the path to the gate. The more fell before, the more souls return...</p>
+        <p><b>Every level has a twist:</b> darkness, broken bridges, fake key cards, a closing gate, sandstorms, slippery ice, meteors and a final boss.</p>
+        <div class="controls">
+          <div><b>Phone</b><br />Left side: move &middot; Right side: drag to aim<br />FIRE (hold &amp; drag to aim), JUMP, RELOAD, RUN</div>
+          <div><b>PC</b><br />WASD move &middot; Mouse aim &middot; Click fire<br />Space jump &middot; Shift run &middot; R reload &middot; Esc pause</div>
+        </div>
+      </div>
+      <button class="btn small" data-act="back">BACK</button>
+    </div>
+
+    <!-- ===== Level intro ===== -->
+    <div id="overlay-intro" class="screen overlay">
+      <div class="card">
+        <div class="lvl-num" id="intro-num">LEVEL 1</div>
+        <div class="lvl-name" id="intro-name"></div>
+        <div class="lvl-sub" id="intro-sub"></div>
+        <p class="lvl-story" id="intro-story"></p>
+        <p class="lvl-tip" id="intro-tip"></p>
+        <button class="btn primary" data-act="start">START</button>
+      </div>
+    </div>
+
+    <!-- ===== Pause ===== -->
+    <div id="overlay-pause" class="screen overlay">
+      <div class="card">
+        <div class="lvl-name">PAUSED</div>
+        <div class="menu-buttons">
+          <button class="btn primary" data-act="resume">RESUME</button>
+          <button class="btn" data-act="restart">RESTART LEVEL</button>
+          <button class="btn" data-act="settings">SETTINGS</button>
+          <button class="btn" data-act="menu">MAIN MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Result ===== -->
+    <div id="overlay-result" class="screen overlay">
+      <div class="card">
+        <div class="lvl-name" id="res-title">LEVEL COMPLETE</div>
+        <div class="lvl-sub" id="res-sub"></div>
+        <div class="stats" id="res-stats"></div>
+        <div class="menu-buttons">
+          <button class="btn primary" id="res-next" data-act="next">NEXT LEVEL</button>
+          <button class="btn" data-act="restart">RETRY</button>
+          <button class="btn" data-act="menu">MAIN MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Victory ===== -->
+    <div id="overlay-victory" class="screen overlay">
+      <div class="card victory">
+        <div class="lvl-num">ALL 10 LEVELS COMPLETE</div>
+        <div class="lvl-name">KUDUMBAM ONDRAGA!</div>
+        <div class="lvl-sub">The family is united</div>
+        <p class="lvl-story">The Ancestor Spirit is at peace. Parents and sons put down their weapons - they were always stronger together.</p>
+        <div class="stats" id="vic-stats"></div>
+        <div class="credits">Game created by <b>JAHITH</b></div>
+        <div class="menu-buttons">
+          <button class="btn primary" data-act="menu">MAIN MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="rotate-hint">Rotate your phone to landscape for the best experience</div>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

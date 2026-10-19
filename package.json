@@ -1,0 +1,23 @@
+{
+  "name": "family-war-3d",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Family War 3D - Parents vs Sons. A 3D attack game created by Jahith.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "android:sync": "npm run build && npx cap sync android",
+    "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/core": "8.5.2",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.2",
+    "vite": "8.3.1"
+  }
+}

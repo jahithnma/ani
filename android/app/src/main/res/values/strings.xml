@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Family War 3D</string>
+    <string name="title_activity_main">Family War 3D</string>
+    <string name="package_name">com.jahith.familywar3d</string>
+    <string name="custom_url_scheme">com.jahith.familywar3d</string>
+</resources>

@@ -20,3 +20,20 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+
+### Family War 3D ###
+node_modules/
+dist/
+*.log
+.DS_Store
+
+# Android build outputs
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/app/src/main/assets/public/
+android/capacitor-cordova-android-plugins/build/
+*.apk
+*.aab

@@ -1,0 +1,8 @@
+{
+  "appId": "com.jahith.familywar3d",
+  "appName": "Family War 3D",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#06080f"
+  }
+}
