@@ -10,7 +10,7 @@
 <body>
   <header class="topbar">
     <div class="brand">💵 Cash Delivery</div>
-    <div class="tag">ATM போக வேண்டாம் · பணம் வீட்டுக்கே</div>
+    <div class="tag">ATM போக வேண்டாம் · பணம் வீட்டுக்கே · Sri Lanka</div>
   </header>
 
   <!-- ========== HOME / NEW ORDER ========== -->
@@ -18,7 +18,7 @@
     <section class="card">
       <h2>எவ்வளவு பணம் வேண்டும்? <small>How much cash?</small></h2>
       <div class="amount-box">
-        <span>₹</span>
+        <span id="cur-sym">Rs.</span>
         <input id="amount" type="number" inputmode="numeric" placeholder="2000">
       </div>
       <div class="chips" id="chips"></div>
@@ -28,7 +28,7 @@
     <section class="card">
       <h2>உங்கள் விவரம் <small>Your details</small></h2>
       <label>பெயர் / Name<input id="name" type="text" autocomplete="name"></label>
-      <label>மொபைல் / Mobile<input id="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digit number"></label>
+      <label>மொபைல் / Mobile<input id="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="07XXXXXXXX"></label>
       <label>முகவரி / Address<textarea id="address" rows="2" placeholder="House no, street, landmark"></textarea></label>
     </section>
 
@@ -43,11 +43,11 @@
     </section>
 
     <section class="card summary">
-      <div class="line"><span>பணம் / Cash</span><b id="s-amount">₹0</b></div>
-      <div class="line"><span>டெலிவரி கட்டணம் / Fee</span><b id="s-fee">₹0</b></div>
-      <div class="line total"><span>மொத்தம் செலுத்த / Pay total</span><b id="s-total">₹0</b></div>
-      <button class="btn primary big" id="btn-pay">UPI மூலம் பணம் செலுத்து</button>
-      <p class="hint center">GPay · PhonePe · Paytm · BHIM</p>
+      <div class="line"><span>பணம் / Cash</span><b id="s-amount">Rs. 0</b></div>
+      <div class="line"><span>டெலிவரி கட்டணம் / Fee</span><b id="s-fee">Rs. 0</b></div>
+      <div class="line total"><span>மொத்தம் செலுத்த / Pay total</span><b id="s-total">Rs. 0</b></div>
+      <button class="btn primary big" id="btn-pay">பணம் செலுத்து · Pay</button>
+      <p class="hint center" id="pay-methods"></p>
     </section>
   </main>
 
@@ -96,6 +96,20 @@
     <button data-go="track">🛵<span>Track</span></button>
     <button data-go="orders">📋<span>Orders</span></button>
   </nav>
+
+  <!-- ========== PAYMENT SHEET (Sri Lanka: LankaQR / bank / eZ Cash) ========== -->
+  <div id="paysheet" class="sheet hidden">
+    <div class="sheet-card">
+      <h2>பணம் செலுத்துங்கள் <small>Make payment</small></h2>
+      <div class="pay-total" id="p-total"></div>
+      <img id="p-qr" class="qr" alt="LankaQR">
+      <p class="hint center" id="p-qr-hint">எந்த bank app / eZ Cash / Genie மூலமும் LankaQR scan செய்யுங்கள்</p>
+      <div class="bank" id="p-bank"></div>
+      <label>Payment reference / Transaction ID<input id="p-ref" type="text" placeholder="eg: 123456789"></label>
+      <button class="btn primary big" id="btn-paid">✅ பணம் செலுத்தினேன் · I have paid</button>
+      <button class="btn ghost big" id="btn-paycancel">ரத்து · Cancel</button>
+    </div>
+  </div>
 
   <div id="toast" class="toast"></div>
 

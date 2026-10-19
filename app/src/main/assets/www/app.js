@@ -20,7 +20,7 @@
 
   // ---------------------------------------------------------------- helpers
 
-  function rupees(n) { return "₹" + Number(n || 0).toLocaleString("en-IN"); }
+  function rupees(n) { return CFG.currencySymbol + " " + Number(n || 0).toLocaleString(CFG.locale); }
 
   function fee(amount) {
     return Math.round(CFG.baseFee + amount * CFG.feePercent / 100);
@@ -151,7 +151,7 @@
 
   // ---------------------------------------------------------------- order form
 
-  [500, 1000, 2000, 5000, 10000].forEach(function (v) {
+  CFG.quickAmounts.forEach(function (v) {
     var b = document.createElement("button");
     b.className = "chip";
     b.textContent = rupees(v);
@@ -167,7 +167,7 @@
     $("s-amount").textContent = rupees(a);
     $("s-fee").textContent = rupees(f);
     $("s-total").textContent = rupees(a + f);
-    $("btn-pay").textContent = a > 0 ? rupees(a + f) + " UPI மூலம் செலுத்து" : "UPI மூலம் பணம் செலுத்து";
+    $("btn-pay").textContent = a > 0 ? rupees(a + f) + " செலுத்து · Pay" : "பணம் செலுத்து · Pay";
     Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (c) {
       c.classList.toggle("on", c.textContent === rupees(a));
     });
@@ -183,9 +183,11 @@
       $("amount-hint").className = "hint err";
       return "தொகை " + rupees(CFG.minAmount) + " - " + rupees(CFG.maxAmount) + " இடையில் இருக்க வேண்டும்";
     }
-    if (a % 100 !== 0) return "தொகை ₹100-ன் மடங்காக இருக்க வேண்டும் (eg: 1500)";
+    if (a % CFG.amountStep !== 0) return "தொகை " + rupees(CFG.amountStep) + "-ன் மடங்காக இருக்க வேண்டும்";
     if ($("name").value.trim().length < 2) return "பெயரை உள்ளிடவும் / Enter your name";
-    if (!/^[6-9]\d{9}$/.test($("phone").value.trim())) return "சரியான 10 இலக்க மொபைல் எண் / Valid mobile number";
+    if (!new RegExp(CFG.phonePattern).test($("phone").value.trim().replace(/[\s-]/g, ""))) {
+      return "சரியான மொபைல் எண் (" + CFG.phonePlaceholder + ") / Valid mobile number";
+    }
     if ($("address").value.trim().length < 5) return "முகவரியை உள்ளிடவும் / Enter address";
     if (!state.location) return "Map-ல் உங்கள் இடத்தை தேர்ந்தெடுங்கள் / Choose location";
     return null;
@@ -208,7 +210,7 @@
       fee: fee(a),
       total: a + fee(a),
       name: $("name").value.trim(),
-      phone: $("phone").value.trim(),
+      phone: $("phone").value.trim().replace(/[\s-]/g, ""),
       address: $("address").value.trim(),
       location: state.location,
       createdAt: Date.now(),
@@ -216,6 +218,8 @@
     };
     save(STORE_PROFILE, { name: order.name, phone: order.phone, address: order.address });
     state.pendingOrder = order;
+
+    if (CFG.paymentMode !== "upi") { openPaySheet(order); return; }
 
     var upi = "upi://pay?" + [
       "pa=" + encodeURIComponent(CFG.upiId),
@@ -235,7 +239,55 @@
     }
   });
 
-  // Called by MainActivity when the UPI app returns
+  // ---- Sri Lanka: LankaQR / bank transfer / eZ Cash, customer enters the reference
+
+  function bankLine(label, value) {
+    var row = document.createElement("div");
+    row.className = "line";
+    var l = document.createElement("span");
+    l.textContent = label;
+    var v = document.createElement("b");
+    v.textContent = value;
+    row.appendChild(l);
+    row.appendChild(v);
+    return row;
+  }
+
+  function openPaySheet(order) {
+    $("p-total").textContent = rupees(order.total);
+    $("p-ref").value = "";
+    var qr = $("p-qr");
+    qr.onerror = function () { qr.classList.add("hidden"); $("p-qr-hint").classList.add("hidden"); };
+    qr.classList.remove("hidden");
+    $("p-qr-hint").classList.remove("hidden");
+    qr.src = CFG.lankaQrImage;
+
+    var bank = $("p-bank");
+    bank.innerHTML = "";
+    bank.appendChild(bankLine("Bank", CFG.bank.name));
+    bank.appendChild(bankLine("Account name", CFG.bank.accountName));
+    bank.appendChild(bankLine("Account no.", CFG.bank.accountNo));
+    bank.appendChild(bankLine("Branch", CFG.bank.branch));
+    if (CFG.ezCash) bank.appendChild(bankLine("eZ Cash / mCash", CFG.ezCash));
+    bank.appendChild(bankLine("Remark / Reference", order.id));
+    $("paysheet").classList.remove("hidden");
+  }
+
+  function closePaySheet() { $("paysheet").classList.add("hidden"); }
+
+  $("btn-paid").addEventListener("click", function () {
+    var ref = $("p-ref").value.trim();
+    if (ref.length < 4) { toast("Payment reference எண்ணை உள்ளிடவும் / Enter reference no."); return; }
+    closePaySheet();
+    window.onUpiResult("SUCCESS", "ref=" + ref);
+  });
+
+  $("btn-paycancel").addEventListener("click", function () {
+    closePaySheet();
+    window.onUpiResult("CANCELLED", "");
+  });
+
+  // Called by MainActivity when the UPI app returns (and by the pay sheet above)
   window.onUpiResult = function (status, raw) {
     var order = state.pendingOrder;
     state.pendingOrder = null;
@@ -440,7 +492,7 @@
       amt.textContent = rupees(o.amount) + " · " + o.id;
       var meta = document.createElement("div");
       meta.className = "o-meta";
-      meta.textContent = new Date(o.createdAt).toLocaleString("en-IN") +
+      meta.textContent = new Date(o.createdAt).toLocaleString(CFG.locale) +
         (o.rider ? " · " + o.rider.name + " (" + o.rider.phone + ")" : "");
       left.appendChild(amt);
       left.appendChild(meta);
@@ -488,6 +540,7 @@
 
   // Android back button: return true if handled
   window.onBack = function () {
+    if (!$("paysheet").classList.contains("hidden")) { $("btn-paycancel").click(); return true; }
     if (state.screen !== "home") { go("home"); return true; }
     return false;
   };
@@ -500,10 +553,15 @@
     $("phone").value = profile.phone || "";
     $("address").value = profile.address || "";
   }
+  $("cur-sym").textContent = CFG.currencySymbol;
+  $("phone").placeholder = CFG.phonePlaceholder;
+  $("pay-methods").textContent = CFG.paymentMode === "upi"
+    ? "GPay · PhonePe · Paytm · BHIM"
+    : "LankaQR · Bank transfer · eZ Cash · Genie";
   updateSummary();
   locate();
 
-  if (/yourupiid/.test(CFG.upiId)) {
+  if (CFG.paymentMode === "upi" && /yourupiid/.test(CFG.upiId)) {
     console.warn("APP_CONFIG.upiId is still the placeholder - set your real UPI ID in config.js");
   }
 })();
